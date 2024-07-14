@@ -13,11 +13,11 @@ class authController extends Controller
     //
     public function register()
     {
-        return view('register');
+        return view('authentication.register');
     }
     public function login()
     {
-        return view('login');
+        return view('authentication.login');
     }
     public function logout()
     {
@@ -32,15 +32,15 @@ class authController extends Controller
     {
         try {
             $validation = request()->validate([
-                'name' => ['required'],
-                'email' => ['required', 'email', 'unique:users'],
+                'nombre' => ['required'],
+                'cedula_number' => ['required', 'string', 'unique:users'],
+                'phone_number' => ['required', 'string', 'unique:users'],
                 'password' => ['required', 'confirmed'],
             ]);
             if (request()->has('password')) {
 
 
                 $validation['password'] = bcrypt($validation['password']); // Hash the password
-                $validation['role'] = 'admin'; // Hash the password
                 $validation['_token'] = request('_token'); // Hash the password
 
 
@@ -61,7 +61,7 @@ class authController extends Controller
     {
         try {
             $atributes = request()->validate([
-                'email' => ['required', 'email'],
+                'phone_number' => ['required', 'string'],
                 'password' => ['required']
             ]);
             Auth::attempt($atributes);
