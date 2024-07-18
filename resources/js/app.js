@@ -1,8 +1,10 @@
 import "./bootstrap";
 import { createApp } from "vue";
-import Nav from "../../resources/js/components/nav.vue";
+import Home from "/resources/js/components/Home.vue";
 
 const app = createApp();
-app.component("nav", Nav);
+
+
+app.component("home", Home);
 
 app.mount("#app");
