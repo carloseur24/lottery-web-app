@@ -1,16 +1,6 @@
 <script setup>
-import { defineProps } from 'vue';
 
-const props = defineProps({
-    status: Boolean,
-    default: false
-});
-
-const emit = defineEmits(['update:status']);
-
-const togglePerfil = () => {
-    emit('update:status', !props.status);
-};
+const emit = defineEmits(['open-modal']); // Define the emitted events
 
 </script>
 
@@ -25,12 +15,12 @@ const togglePerfil = () => {
 
     </main>
 
-    <div class="sm:hidden fixed bottom-0 left-0 right-0 bg-slate-700 p-4 flex justify-around">
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-700 p-4 flex justify-around">
         <button class="text-white text-sm">Home</button>
-        <button class="text-white text-sm">Span 1</button>
-        <button class="text-white text-sm">Depósito</button>
-        <button class="text-white text-sm">Favorites</button>
-        <button class="text-white text-sm" @click="togglePerfil">Perfil</button>
+        <button class="text-white text-sm">span</button>
+        <button class="text-white text-sm" @click="$emit('open-modal', 'deposito')">Depósito</button>
+        <button class="text-white text-sm" @click="$emit('open-modal', 'favoritos')">Favoritos</button>
+        <button class="text-white text-sm" @click="$emit('open-modal', 'perfil')">Perfil</button>
     </div>
 
 </template>
