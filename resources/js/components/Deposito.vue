@@ -1,24 +1,40 @@
 <script setup>
-defineProps({
+import { nextTick } from "vue";
+
+const props = defineProps({
     name: String,
     icon: String,
-    balance: String,
     selected: Boolean,
+    payment: {
+        type: String,
+        default: '', // Provide a default empty string
+    },
 });
 
-const emit = defineEmits(['select']);
+// const emit = defineEmits(['select', 'open-modal']);
+const emit = defineEmits(['open-modal']);
+
+const selectAndOpenModal = async () => {
+    try {
+        await nextTick();
+        // Check if props.payment exists and is a string
+        if (typeof props.payment === 'string') {
+            emit('open-modal', props.payment.toString());
+        } else {
+            console.error('Invalid payment type:', props.payment);
+        }
+    } catch (error) {
+        console.error('Error in selectAndOpenModal:', error);
+    }
+};
 </script>
 
 <template>
     <div class="flex items-center p-2 rounded-md hover:bg-gray-100" :class="{ 'bg-gray-200': selected }"
-        @click="emit('select')">
-        <!-- <img :src="icon" :alt="`${name} Icon`" class="h-6 w-6 mr-2" /> -->
+        @click="selectAndOpenModal">
+        <span :class="'' + icon" />
         <div>
             <p class="font-semibold">{{ name }}</p>
-            <p v-if="balance" class="text-sm text-gray-500">Balance: {{ balance }}</p>
         </div>
     </div>
-    <Modal>
-        <slot />
-    </Modal>
 </template>

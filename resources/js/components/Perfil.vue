@@ -1,5 +1,11 @@
+<script setup>
+import { defineProps } from 'vue';
+const props = defineProps({
+    common_classes_modal: String,
+})
+</script>
 <template>
-    <article class="bg-white p-6 rounded-lg shadow-lg modal-content">
+    <article :class="'bg-white p-14 rounded-lg shadow-lg ' + props.common_classes_modal">
         <form action="/register" method="POST">
             <div class="mb-4">
                 <label for="nombre" class="block text-slate-700 text-sm font-bold mb-2">Nombre:</label>

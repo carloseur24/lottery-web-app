@@ -1,4 +1,5 @@
 <script setup>
+import { defineProps } from 'vue';
 const bankData = {
     bank: '0424',
     phone: '',
@@ -7,10 +8,13 @@ const bankData = {
 };
 const validatePayment = (e) => {
 }
+const props = defineProps({
+    common_classes_modal: String,
+})
 </script>
 
 <template>
-    <section class="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-32 modal-content">
+    <section :class="'container ' + props.common_classes_modal">
         <article class="bg-white p-6 rounded-lg shadow-lg">
             <div class="header mb-4">
                 <!-- <img src="logo.png" alt="Pago Móvil Logo" class="h-12 w-auto mx-auto" /> -->
