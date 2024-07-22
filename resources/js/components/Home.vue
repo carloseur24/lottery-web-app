@@ -55,9 +55,7 @@ const modal_classes = 'modal-content w-[95%] sm:w-[85%] md:mx-0 md:max-w-[800px]
             <article :class="'bg-white p-10 rounded-lg shadow-lg h-[1000px]' + modal_classes">
                 <h2 class="pb-2 font-bold">Selecciona un método de pago</h2>
                 <p class="text-sm text-gray-500">Balance: {{ balance }}</p>
-
-                <hr class="pt-2">.
-
+                <hr class="pt-2">
                 <Deposito v-for="method in paymentMethods" :key="method.name" :name="method.name" :icon="method.icon"
                     :selected="selectedMethod === method.name" v-on="{
                         'open-modal': () => toggleModal(method.payment)

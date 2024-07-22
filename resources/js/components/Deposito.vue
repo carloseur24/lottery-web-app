@@ -30,11 +30,9 @@ const selectAndOpenModal = async () => {
 </script>
 
 <template>
-    <div class="flex items-center p-2 rounded-md hover:bg-gray-100" :class="{ 'bg-gray-200': selected }"
+    <div class="flex items-center p-2 rounded-md hover:bg-gray-100 gap-2" :class="{ 'bg-gray-200': selected }"
         @click="selectAndOpenModal">
         <span :class="'' + icon" />
-        <div>
-            <p class="font-semibold">{{ name }}</p>
-        </div>
+        <p class="font-semibold">{{ name }}</p>
     </div>
 </template>

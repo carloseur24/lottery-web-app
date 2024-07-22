@@ -6,7 +6,15 @@ const props = defineProps({
 </script>
 <template>
     <article :class="'bg-white p-14 rounded-lg shadow-lg ' + props.common_classes_modal">
-        <form action="/register" method="POST">
+        <h2 class="text-xl font-bold mb-4">Información del usuario</h2>
+        <div class="flex flex-col gap-2 mb-4">
+            <article class="font-bold">Nombre: <span class="font-medium">{{ }}</span></article>
+            <article class="font-bold">Cédula: <span class="font-medium">{{ }}</span></article>
+            <article class="font-bold">Teléfono: <span class="font-medium">{{ }}</span></article>
+            <article class="font-bold">Contraseña: <span class="font-medium">{{ }}</span></article>
+            <article class="font-bold">Pago Movil: <span class="font-medium">{{ }}</span></article>
+        </div>
+        <!-- <form action="/register" method="POST">
             <div class="mb-4">
                 <label for="nombre" class="block text-slate-700 text-sm font-bold mb-2">Nombre:</label>
                 <input type="text" id="nombre" name="nombre"
@@ -49,6 +57,6 @@ const props = defineProps({
                     Registrar
                 </button>
             </div>
-        </form>
+        </form> -->
     </article>
 </template>
