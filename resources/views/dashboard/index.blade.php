@@ -16,5 +16,9 @@
     </div>
 
 </body>
+<script>
+    window.user = {!! json_encode(Auth::check() ? Auth::user() : null) !!};
+    // console.log(window.user);
+</script>
 
 </html>

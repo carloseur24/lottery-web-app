@@ -1,7 +1,42 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, onMounted } from 'vue';
 const props = defineProps({
     common_classes_modal: String,
+})
+const perfil_data = async (id) => {
+    try {
+        const response = await fetch('/perfil/usuario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id })
+        })
+        const data = await response.json()
+        if (response.status !== 200) {
+            throw new Error('Error al obtener datos del perfil')
+        }
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const users_data = async () => {
+    try {
+        const response = await fetch('/perfil/usuario')
+        const data = await response.json()
+        if (response.status !== 200) {
+            throw new Error('Error al obtener datos del perfil')
+        }
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+onMounted(async () => {
+    await users_data()
+    await perfil_data(window.user.id)
 })
 </script>
 <template>
@@ -11,7 +46,10 @@ const props = defineProps({
             <article class="font-bold">Nombre: <span class="font-medium">{{ }}</span></article>
             <article class="font-bold">Cédula: <span class="font-medium">{{ }}</span></article>
             <article class="font-bold">Teléfono: <span class="font-medium">{{ }}</span></article>
-            <article class="font-bold">Contraseña: <span class="font-medium">{{ }}</span></article>
+            <article class="font-bold">Contraseña: <button
+                    class="font-medium bg-slate-400 text-slate-50 rounded p-2 hover:opacity-80 transition-opacity duration-150 ease-in-out">{{
+                        'Cambiar contraseña' }}</button>
+            </article>
             <article class="font-bold">Pago Movil: <span class="font-medium">{{ }}</span></article>
         </div>
         <!-- <form action="/register" method="POST">

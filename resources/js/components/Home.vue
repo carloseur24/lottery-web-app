@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 
 import Nav from "./Nav.vue";
 import PagoMovil from "./PagoMovil.vue";
@@ -41,6 +41,10 @@ const toggleModal = async (modalName) => {
         modalState.value[modalName] = true;
     }
 };
+
+// onMounted(() => {
+//     console.log(); // or other user properties
+// });
 
 const modal_classes = 'modal-content w-[95%] sm:w-[85%] md:mx-0 md:max-w-[800px]'
 </script>
