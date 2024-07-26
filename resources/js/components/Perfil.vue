@@ -1,14 +1,20 @@
 <script setup>
-import { defineProps, onMounted } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
 const props = defineProps({
     common_classes_modal: String,
 })
+
+const token = window.Laravel.csrfToken;
+const user_data = ref({});
+const isLoading = ref(true);
+
 const perfil_data = async (id) => {
     try {
         const response = await fetch('/perfil/usuario', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
             },
             body: JSON.stringify({ id })
         })
@@ -16,41 +22,67 @@ const perfil_data = async (id) => {
         if (response.status !== 200) {
             throw new Error('Error al obtener datos del perfil')
         }
-        return data
+        const { nombre, cedula_number, phone_number, banco_id } = data
+        user_data.value = { nombre, cedula_number, phone_number, banco_id };
+        isLoading.value = false;
     } catch (error) {
         console.log(error)
     }
-}
 
-const users_data = async () => {
-    try {
-        const response = await fetch('/perfil/usuario')
-        const data = await response.json()
-        if (response.status !== 200) {
-            throw new Error('Error al obtener datos del perfil')
-        }
-        return data
-    } catch (error) {
-        console.log(error)
-    }
 }
 onMounted(async () => {
-    await users_data()
-    await perfil_data(window.user.id)
+    await perfil_data(window.user.id);
+    try {
+        // Assuming window.user.id exists and is valid
+        // await get_users_data()
+    } catch (error) {
+        console.error('Error on mounted:', error); // Improved error handling
+    }
 })
+
+
+
+
+// const get_users_data = async () => {
+//     try {
+//         const response = await fetch('/perfil/usuario', {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'X-CSRF-TOKEN': token
+//             }
+//         })
+//         const data = await response.json()
+//         // console.log(data)
+//         if (response.status !== 200) {
+//             throw new Error('Error al obtener datos del perfil')
+//         }
+//         return data
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+
+
 </script>
 <template>
-    <article :class="'bg-white p-14 rounded-lg shadow-lg ' + props.common_classes_modal">
+    <div v-if="isLoading">Loading...</div>
+    <article :class="'bg-white p-14 rounded-lg shadow-lg ' + props.common_classes_modal" v-else>
         <h2 class="text-xl font-bold mb-4">Información del usuario</h2>
         <div class="flex flex-col gap-2 mb-4">
-            <article class="font-bold">Nombre: <span class="font-medium">{{ }}</span></article>
-            <article class="font-bold">Cédula: <span class="font-medium">{{ }}</span></article>
-            <article class="font-bold">Teléfono: <span class="font-medium">{{ }}</span></article>
+            <article class="font-bold">Cédula: <span class="font-medium">{{ user_data.nombre }}</span>
+            </article>
+            <article class="font-bold">Teléfono: <span class="font-medium">{{ user_data.phone_number }} </span>
+            </article>
             <article class="font-bold">Contraseña: <button
                     class="font-medium bg-slate-400 text-slate-50 rounded p-2 hover:opacity-80 transition-opacity duration-150 ease-in-out">{{
                         'Cambiar contraseña' }}</button>
             </article>
-            <article class="font-bold">Pago Movil: <span class="font-medium">{{ }}</span></article>
+            <article class="font-bold">Pago Movil: <span class="font-medium">
+                    {{ '0102 - ' + user_data.cedula_number + ' - ' + user_data.phone_number }}
+                </span>
+            </article>
         </div>
         <!-- <form action="/register" method="POST">
             <div class="mb-4">
