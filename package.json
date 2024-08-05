@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite && npm run php:serve",
         "build": "vite build",
         "php:serve": "php artisan serve"
     },
@@ -19,6 +19,8 @@
         "vue": "^3.4.31",
         "vue-loader": "^17.4.2",
         "vue-next": "^0.0.1",
-        "vue-router": "^4.4.0"
+        "vue-router": "^4.4.0",
+        "vue-sweetalert2": "^5.0.11",
+        "vue-the-mask": "^0.11.1"
     }
 }

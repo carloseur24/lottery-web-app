@@ -21,7 +21,8 @@ class authController extends Controller
     }
     public function logout()
     {
-        return view('logout');
+        Auth::logout();
+        return response()->json(['message' => 'Logged out successfully'], 200);
     }
 
     public function store()
@@ -32,11 +33,13 @@ class authController extends Controller
     {
         try {
             $validation = request()->validate([
-                'nombre' => ['required'],
+                'nombre' => ['required', 'string'],
                 'cedula_number' => ['required', 'string', 'unique:users'],
                 'phone_number' => ['required', 'string', 'unique:users'],
+                'email' => ['email', 'unique:users'],
                 'password' => ['required', 'confirmed'],
             ]);
+
             if (request()->has('password')) {
 
 
@@ -47,30 +50,39 @@ class authController extends Controller
                 $user = User::create($validation);
 
                 Auth::login($user);
-                return redirect('/dashboard');
+                return json_encode(['message' => 'user created successfully']);
+                // return redirect('/dashboard');
             } else {
                 logger('Password not present'); // Debugging log
-                return redirect()->back()->withErrors(['password' => 'The password field is required'])->withInput();
+                return json_encode(['error' => 'user not created successfully']);
+                // return redirect()->back()->withErrors(['password' => 'The password field is required'])->withInput();
             }
         } catch (ValidationException $th) {
             logger()->error('Validation failed:', $th->errors());
-            return ($th->errors());
+            // return ($th->errors());
+            return json_encode(['error' => 'user not registered successfully', 'message' => $th->getMessage()]);
         }
     }
     public function authenticate()
     {
         try {
+            // $phone = request()->input('phone_number');
+            // return json_encode(['message' => 'user authenticated successfully']);
+
             $atributes = request()->validate([
                 'phone_number' => ['required', 'string'],
                 'password' => ['required']
             ]);
-            Auth::attempt($atributes);
 
-            request()->session()->regenerate();
-
-            return redirect('/dashboard');
+            if (Auth::attempt($atributes)) {
+                request()->session()->regenerate();
+                return json_encode(['message' => 'user authenticated successfully']);
+            } else {
+                return json_encode(['error' => 'user not authenticated successfully']);
+            }
+            // return redirect('/dashboard');
         } catch (\Throwable $th) {
-            throw $th;
+            return json_encode(['error' => 'user not authenticated successfully', 'message' => $th->getMessage()]);
         }
     }
 

@@ -30,8 +30,8 @@ const selectAndOpenModal = async () => {
 </script>
 
 <template>
-    <div class="flex items-center p-2 rounded-md hover:bg-gray-100 gap-2" :class="{ 'bg-gray-200': selected }"
-        @click="selectAndOpenModal">
+    <div class="flex items-center p-2 rounded-md drop-shadow-sm hover:bg-gray-100 gap-2 duration-150 ease-in transition-all cursor-pointer"
+        :class="{ 'bg-gray-200': selected }" @click="selectAndOpenModal">
         <span :class="'' + icon" />
         <p class="font-semibold">{{ name }}</p>
     </div>
