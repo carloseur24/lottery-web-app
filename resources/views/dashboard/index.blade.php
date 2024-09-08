@@ -10,10 +10,12 @@
     @vite('resources/js/app.js')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.3/socket.io.js"></script>
 
 <body class="bg-slate-800 w-full h-screen">
     <div id="app" class="w-full h-full">
         <home />
+
     </div>
 
 </body>

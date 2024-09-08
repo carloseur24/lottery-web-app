@@ -7,6 +7,8 @@ import PagoMovil from "./PagoMovil.vue";
 import Deposito from "./Deposito.vue";
 import Modal from "./Modal.vue";
 import Perfil from "./Perfil.vue";
+import Ann from "./Animation.vue";
+
 
 const activeModal = ref(null);
 const modalState = ref({
@@ -132,6 +134,7 @@ onMounted(async () => {
         console.error('Error on mounted:', error); // Improved error handling
     }
 })
+
 </script>
 
 <template>
@@ -143,6 +146,8 @@ onMounted(async () => {
             <h1 class="text-3xl font-bold text-gray-900 mb-4">Pagina de bienvenida</h1>
             <p class="text-gray-700">Contenido...</p>
         </div>
+
+        <ann />
 
     </main>
 
