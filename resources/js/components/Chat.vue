@@ -9,8 +9,10 @@
     </div>
 </template>
 
+
+
 <script>
-import socket from '../socket';
+import socket from '../../../server/services/socket';
 
 export default {
     data() {
